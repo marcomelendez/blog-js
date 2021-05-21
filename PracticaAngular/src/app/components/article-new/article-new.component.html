@@ -1,0 +1,49 @@
+<app-slider [nombre]="'Formulario'"
+            [size]="'small'"></app-slider>
+
+<div class="center">
+    <section id="content">
+        <h1 class="subheader">{{ page_title }}</h1>
+        <form class="mid-form" #articleForm="ngForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="title">Titulo</label>
+                <input type="text" name="title" #title="ngModel" [(ngModel)]="article.title" required/>
+                <small *ngIf="!title.valid && title.touched">
+                    El titulo no es valido
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="content">Contenido</label>
+                <textarea name="content" #content="ngModel" [(ngModel)]="article.content" required></textarea>
+                <small *ngIf="!content.valid && content.touched">
+                    El contenido no es valido
+                </small>
+            </div>
+
+            <div class="form-group">
+                <div class="image-thumb" *ngIf="is_edit">
+                    <img src="{{url +'get-image/'+ article.image}}" alt="{{ article.title }}"  *ngIf="article.image"/>
+                    <img src="assets/images/default.png" alt="{{ article.title }}" *ngIf="!article.image"/>
+                </div>
+
+                <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)" [multiple]="false">
+                    <ngx-dropzone-label>
+                        <div>
+                            <h2>Subir imagen</h2>
+                        </div>
+                    </ngx-dropzone-label>
+                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+                        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                    </ngx-dropzone-image-preview>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <input type="submit" value="Enviar" class="btn btn-success" [disabled]="articleForm.invalid"/>
+
+       </form>
+    </section>
+
+    <app-sidebar></app-sidebar>
+</div>

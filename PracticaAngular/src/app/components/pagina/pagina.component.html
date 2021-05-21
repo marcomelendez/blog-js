@@ -1,0 +1,20 @@
+<app-slider [nombre]="'Pagina'"></app-slider>
+
+<div class="center">
+    <section id="content">
+        <h1 class="subheader">Pagina</h1>
+        <h2>El nombre de la pagina que busca es: {{ nombre }}</h2>
+
+        <div *ngIf="nombre && apellido; else noHayParametros">
+            <h2>El nombre es: {{ nombre }}</h2>
+            <h2>El apellido es: {{ apellido }}</h2>
+        </div>
+
+        <ng-template #noHayParametros>
+            <h2>No hay parametros por la URL</h2>
+        </ng-template>
+        <button (click)="redireccion()">Llevame a la pagina</button>
+    </section>
+
+    <app-sidebar></app-sidebar>
+</div>
